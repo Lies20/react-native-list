@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList,} from 'react-native';
+import { StyleSheet, Text, View, FlatList,Image} from 'react-native';
 import axios from 'axios';
 
 
@@ -13,6 +13,10 @@ export default function App() {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    image:{
+      height:70,
+      with:70
+    }
   });
 
   const [countries,setCountries] = useState([]);
@@ -22,8 +26,7 @@ export default function App() {
     axios.get("https://restcountries.com/v3.1/all").then(resultat=>{
          console.log("resultat",resultat.data[2].name.common)
          setCountries(resultat.data)
-         setCapital(resultat.data)
-         console.log("capital",capital)
+        //  console.log("capital",capital)
       })
     },
     [])
@@ -31,10 +34,12 @@ export default function App() {
       
   
       const renderItem=({ item }) => {
-      // console.log("item",item)
+      console.log("item",item)
         return (
         <View>
-          <Text>{item.name.common}{item.name.capital}</Text>
+          <Text>{item.capital}</Text>
+          <Text>{item.name.common}</Text>
+          <Image  style={styles.image} source={item.flags.svg}/>
         </View>
       );
     }
